@@ -1,22 +1,42 @@
 <template>
     <div class="content-area">
-        <p class="chart-title">{{contentTitle}}</p>
-        <app-map></app-map> 
+        <div class="title-chart">
+            <p class="chart-title">{{contentTitle}}</p>
+            <app-chart v-bind:colorArr="colorArr"></app-chart> 
+        </div>
+        <div class="legend-container">
+            <app-legend v-bind:colorArr="colorArr"></app-legend>
+        </div>
     </div>
 </template>
 
 <script>
-import Map from './Map';
+import Chart from './Chart';
+import Legend from './Legend';
 import { TitleBus } from '../event-busses/title-bus';
 
 export default {
     components: {
-        'app-map': Map
+        'app-chart': Chart,
+        'app-legend': Legend
     },
     data () {
         return {
             contentTitle: 'Please enter a title',
-            chartData: []
+            //chartData: [],
+            colorArr: [
+                '#7bd389',
+                '#48599f',
+                '#842c41',
+                '#8fcfda',
+                '#d685d6',
+                '#bcc043',
+                '#246c59',
+                '#c249b6',
+                '#a8df9e',
+                '#c77858',
+                '#2e4b8a'
+            ]
         }
     },
     created(){
@@ -33,6 +53,11 @@ export default {
 
 <style scoped>
     .content-area {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .title-chart {
         display: flex;
         flex-direction: column;
         align-items: center;
