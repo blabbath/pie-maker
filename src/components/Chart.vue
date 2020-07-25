@@ -1,7 +1,5 @@
 <template>
-    <div>
-        <div id="pie">
-        </div>
+    <div id="pie">
     </div>
 </template>
 
@@ -34,15 +32,10 @@ export default {
             this.g = this.svg.append('g')
                 .attr('transform', 'translate(250,300)');
 
-            this.tooltip = d3.select(".title-chart")
+            this.tooltip = d3.select("body")
                 .append("div")
                 .style("opacity", 0)
                 .attr("class", "tooltip")
-                .style("background-color", "rgba(51, 51, 51, .8)")
-                .style("padding", "8px 15px")
-                .style("color", "white")
-                .style("border-radius", ".15rem")
-                .style("border-style", "none")
         },
 
         renderPie(data){
@@ -59,10 +52,10 @@ export default {
                 .enter().append('path')
                     .attr('class','piechart')
                     .attr('fill', (d, i) => this.color(i))
-                    .attr('class', (d, i) => console.log(this.color(i)))
                     .attr('opacity', 0.8)
                     .attr('d', arc)
                     .on("mouseover", this.mouseover)
+                    .on("mousemove", this.mousemove)
                     .on("mouseleave", this.mouseleave)
                     .each(function(d){ this._current = d; })
 
@@ -76,22 +69,27 @@ export default {
             // add transition to new path
             this.g.datum(data).selectAll('path')
                 .data(pie).transition().duration(800).attrTween('d', arcTween)
-            // add any new paths
-/*             this.g.datum(data).selectAll('path')
-                .data(pie)
-                .enter().append('path')
-                    .attr('class', 'line')
-                    .attr('fill', function(d,i){ return this.color(i); })
-                    .attr('d', arc)
-                    .each(function(d){ this._current = d; }) */
             // remove data not being used
             this.g.datum(data).selectAll('path')
                 .data(pie).exit().remove();
         },
         
         mouseover(d) {
-            this.tooltip.style("opacity", 1)
+            this.tooltip
+                .style("opacity", 1)
                 .html(d.data.name + ': ' + d.data.value)
+                .attr('style', 'position: absolute')
+/*                 .style("background-color", "rgba(51, 51, 51, .8)")
+                .style("padding", "8px 15px")
+                .style("color", "white")
+                .style("border-radius", ".15rem")
+                .style("border-style", "none") */
+        },
+
+        mousemove(d) {
+            this.tooltip
+                .style("top", (d3.event.pageY-30)+"px") 
+                .style("left",(d3.event.pageX+40)+"px"); 
         },
 
         mouseleave(d) {
@@ -118,5 +116,11 @@ export default {
 </script>
 
 <style >
-
+    .tooltip {
+        background-color: rgba(51, 51, 51, .8);
+        padding: 8px 15px;
+        color: white;
+        border-radius: .15rem;
+        border-style: none;
+    }
 </style>

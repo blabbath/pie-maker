@@ -24,11 +24,12 @@ export default {
         initLegend() {
             this.svg = d3.select('#legend')
                 .append('svg')
+                .attr('class', 'legend-svg')
                 .attr('width', this.width)
                 .attr('height', this.height)
             
             this.g = this.svg.append('g')
-                .attr('transform', 'translate(20, 300)')
+                .attr('transform', 'translate(20, 200)')
                 .attr('id', 'legend-group')
         },
 
@@ -72,3 +73,11 @@ export default {
     }
 }
 </script>
+
+<style>
+    .legend-svg {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+</style>

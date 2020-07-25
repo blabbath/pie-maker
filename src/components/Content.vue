@@ -1,11 +1,21 @@
 <template>
-    <div class="content-area">
-        <div class="title-chart">
-            <p class="chart-title">{{contentTitle}}</p>
-            <app-chart v-bind:colorArr="colorArr"></app-chart> 
+    <div>
+        <div class="clr-row">
+            <div class="clr-col-9 title-col">
+                <p class="chart-title">{{contentTitle}}</p>
+            </div>
+            <div class="clr-col-3">
+            </div>
         </div>
-        <div class="legend-container">
-            <app-legend v-bind:colorArr="colorArr"></app-legend>
+        <div class="clr-row">
+            <div class="clr-col-9 chart-col">
+                <div class="clr-row">
+                    <app-chart v-bind:colorArr="colorArr"></app-chart> 
+                </div>
+            </div>
+            <div class="clr-col-3 legend-col">
+                <app-legend v-bind:colorArr="colorArr"></app-legend>
+            </div>
         </div>
     </div>
 </template>
@@ -52,15 +62,14 @@ export default {
 </script>
 
 <style scoped>
-    .content-area {
+    .title-col {
         display: flex;
-        justify-content: space-evenly;
+        justify-content: center;
     }
 
-    .title-chart {
+    .chart-col {
         display: flex;
-        flex-direction: column;
-        align-items: center;
+        justify-content: center;
     }
 
     .chart-title {
